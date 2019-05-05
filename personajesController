@@ -1,0 +1,36 @@
+var url = 'https://swapi.co/api/people/?page=1&format=json'
+
+function personajesController (){
+
+    cargarPersonajes()
+    $('#cargarPersonajes').click(function(){
+        cargarPersonajes() //para llamar a los personajes en el click del boton
+    })
+}  
+
+function cargarPersonajes(){
+    var request = $.ajax(
+        {
+            url: url,
+            method: 'GET', 
+        })
+
+    request.done(function (datos) {
+    
+        var arrPersonajes = datos.results
+        url = datos.next
+          for (var i = 0; i < arrPersonajes.length; i++) {
+            var nuevoPersonaje = $(`<tr></tr>`)
+              .append(`<td>${arrPersonajes[i].name}</td>`)
+              .append(`<td>${arrPersonajes[i].height}</td>`)
+              .append(`<td>${arrPersonajes[i].mass}</td>`)
+              .append(`<td>${arrPersonajes[i].eye_color}</td>`)
+              .append(`<td>${arrPersonajes[i].gender}</td>`)
+              .append(`<td><button type="submit">GUARDAR</button></td>`)
+            $("#tablePersonajes").append(nuevoPersonaje)
+          }
+      
+    })
+}
+
+export default personajesController 
